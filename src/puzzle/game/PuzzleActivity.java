@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,6 @@ public class PuzzleActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.puzzlelayout);
-        Log.i("TESTOWY", "Puzzle activity started");
         int desiredCols = 5;
         int desiredRows = 5;
 
@@ -59,9 +59,7 @@ public class PuzzleActivity extends Activity {
             whole = BitmapFactory.decodeFile(path);
             Log.i("TESTOWY", "bundle nie NULL" + path);
         } else {
-            // whole = BitmapFactory.decodeResource(getResources(),
-            // R.drawable.sa);
-            Log.i("TESTOWY", "bundle NULL");
+            finish();
         }
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -75,8 +73,6 @@ public class PuzzleActivity extends Activity {
         egridview.setNumColumns(desiredCols);
         egridview.setColumnWidth(width / desiredCols);
 
-        // Bitmap whole = BitmapFactory.decodeResource(getResources(),
-        // R.drawable.sa);
         createPiecesArray(whole, (float)width / whole.getWidth(), desiredCols, desiredRows);
 
         mListener = new View.OnTouchListener() {
@@ -86,6 +82,8 @@ public class PuzzleActivity extends Activity {
                 if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
                     int i = egridview.getPositionForView(v);
                     egridview.switchPos(i);
+                    if (egridview.isOrdered())
+                        gameFinished();
                     return true;
                 }
                 return false;
@@ -94,6 +92,7 @@ public class PuzzleActivity extends Activity {
         };
 
         egridview.setAdapter(new ImageAdapter(this, mListener, bPieces));
+        egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols, desiredCols);
 
     }
 
@@ -140,6 +139,11 @@ public class PuzzleActivity extends Activity {
         Bitmap blackBmp = Bitmap.createBitmap(chopWidth, chopHeight, Bitmap.Config.ARGB_8888);
         blackBmp.eraseColor(Color.BLACK);
         bPieces.set(0, blackBmp);
+
+    }
+
+    void gameFinished() {
+        Toast.makeText(getApplicationContext(), "Congratulations!!!", Toast.LENGTH_SHORT).show();
 
     }
 }
