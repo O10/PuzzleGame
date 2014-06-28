@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">PuzzleGame</string>
+    <string name="newtitle">New Game</string>
+     <item name="newgame" type="id"/>
+    
+    
+
+</resources>
