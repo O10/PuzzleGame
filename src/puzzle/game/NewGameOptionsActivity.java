@@ -19,12 +19,9 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 
 /**
- *@author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
- *@author Ready4S
- *@since 27 cze 2014 16:37:14
- */
-/**
- * @author Denis Migol
+ * @author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
+ * @author Ready4S
+ * @since 27 cze 2014 16:37:14
  */
 public class NewGameOptionsActivity extends Activity {
 

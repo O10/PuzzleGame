@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
 
-    <TableLayout
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tablelayout"
@@ -17,7 +14,7 @@
             <TextView
                 android:id="@+id/textView1"
                 android:layout_gravity="center"
-                android:text="Rows:"
+                android:text="@string/rows"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -37,7 +34,7 @@
             <TextView
                 android:id="@+id/textView2"
                 android:layout_gravity="center"
-                android:text="Columns:"
+                android:text="@string/columns"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -53,13 +50,13 @@
             <TextView
                 android:id="@+id/textView3"
                 android:layout_gravity="center"
-                android:text="Image from gallery:"
+                android:text="@string/imagefromgallery:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button
                 android:id="@+id/chooseimageb"
                 android:layout_weight="1"
-                android:text="Choose Image" />
+                android:text="@string/chooseimage" />
 
         </TableRow>
         
@@ -69,7 +66,7 @@
             <TextView
                 android:id="@+id/textView4"
                 android:layout_gravity="center"
-                android:text="Image from URL:"
+                android:text="@string/imagefromurl"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <EditText
@@ -77,9 +74,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10" >
+                android:ems="10"
+                android:inputType="textUri" >
 
-                <requestFocus />
+                
             </EditText>
             
         </TableRow>
@@ -90,7 +88,7 @@
                 android:id="@+id/startbutton"
                 android:layout_span="2"
                 android:layout_weight="1"
-                android:text="Start " />
+                android:text="@string/start" />
 
         </TableRow>
 
@@ -100,4 +98,3 @@
         
     </TableLayout>
 
-</LinearLayout>

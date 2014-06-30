@@ -73,10 +73,12 @@ public class PuzzleActivity extends Activity {
                 createPiecesArray(whole, (float)width / whole.getWidth(), desiredCols, desiredRows);
                 setListener();
                 egridview.setAdapter(new ImageAdapter(this, mListener, bPieces));
-                egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols, desiredCols);
                 if (savedInstanceState != null)
                     ((ImageAdapter)egridview.getAdapter()).positonPieces(savedInstanceState
                             .getIntegerArrayList("positions"));
+                else
+                    egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols, desiredCols);
+
                 whole = null;
 
             } else if (b.getString("TYPE").equals("URL")) {
@@ -90,18 +92,17 @@ public class PuzzleActivity extends Activity {
                         setListener();
                         egridview.setAdapter(new ImageAdapter(getApplicationContext(), mListener,
                                 bPieces));
-                        egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols,
-                                desiredCols);
                         if (instancestae != null) {
                             ((ImageAdapter)egridview.getAdapter()).positonPieces(instancestae
                                     .getIntegerArrayList("positions"));
-                        }
+                        } else
+                            egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols,
+                                    desiredCols);
                         whole = null;
 
                     }
                 });
-                mDownloadTask
-                        .execute("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg");
+                mDownloadTask.execute(path);
             }
 
         } else {
