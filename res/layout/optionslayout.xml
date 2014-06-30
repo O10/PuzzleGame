@@ -50,7 +50,7 @@
             <TextView
                 android:id="@+id/textView3"
                 android:layout_gravity="center"
-                android:text="@string/imagefromgallery:"
+                android:text="@string/imagefromgallery"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button

@@ -8,7 +8,7 @@
     
     <string name="rows">Rows:</string>
     <string name="columns">Columns:</string>
-    <string name="imagefromgallery:">Image from gallery:</string>
+    <string name="imagefromgallery">Image from gallery:</string>
     <string name="chooseimage">Choose Image</string>
     <string name="imagefromurl">Image from URL:</string>
     <string name="start">Start</string>
