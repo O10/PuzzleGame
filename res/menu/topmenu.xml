@@ -3,5 +3,4 @@
     <item
         android:id="@id/newgame"
         android:title="@string/newtitle"/>
-
 </menu>

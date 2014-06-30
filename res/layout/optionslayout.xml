@@ -8,11 +8,11 @@
         android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/tablelayout"
-            android:stretchColumns="*">>
+            android:stretchColumns="*">
+            
 
         <TableRow
-            android:id="@+id/tableRow1"
-            android:gravity="center_horizontal" >
+            android:id="@+id/tableRow1">
 
             <TextView
                 android:id="@+id/textView1"
@@ -22,14 +22,16 @@
 
             <EditText
                 android:id="@+id/rowsvalue"
-                android:inputType="numberDecimal" >
-
+                android:layout_weight="1"
+                android:inputType="numberDecimal"   >
+                
+                
                 
             </EditText>
 
         </TableRow>
-
-        <TableRow
+        
+         <TableRow
             android:id="@+id/tableRow2">
 
             <TextView
@@ -40,33 +42,61 @@
 
             <EditText
                 android:id="@+id/columnsvalue"
+                android:layout_weight="1"
                 android:inputType="numberDecimal" />
 
         </TableRow>
-
-        <TableRow
+        
+                 <TableRow
             android:id="@+id/tableRow3">
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_gravity="center"
-                android:text="Image:"
+                android:text="Image from gallery:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Button
                 android:id="@+id/chooseimageb"
+                android:layout_weight="1"
                 android:text="Choose Image" />
 
         </TableRow>
+        
+                 <TableRow
+            android:id="@+id/tableRow4">
 
-        <TableRow android:id="@+id/tableRow4" >
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_gravity="center"
+                android:text="Image from URL:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/urladd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" >
+
+                <requestFocus />
+            </EditText>
+            
+        </TableRow>
+
+        <TableRow android:id="@+id/tableRow5" >
 
             <Button
-                android:layout_span="2"
                 android:id="@+id/startbutton"
+                android:layout_span="2"
+                android:layout_weight="1"
                 android:text="Start " />
 
         </TableRow>
+
+                 
+
+ 
         
     </TableLayout>
 

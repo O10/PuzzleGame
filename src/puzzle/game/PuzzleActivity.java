@@ -6,6 +6,8 @@
 
 package puzzle.game;
 
+import puzzle.game.ImageDownloadTask.ImageLoaderListener;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,7 +15,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,16 +40,26 @@ public class PuzzleActivity extends Activity {
 
     private View.OnTouchListener mListener;
 
-    ExtGridView egridview;
+    private static ExtGridView egridview;
+
+    private static Bitmap whole = null;
+
+    private static int desiredCols = 5;
+
+    private static int desiredRows = 5;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.puzzlelayout);
-        int desiredCols = 5;
-        int desiredRows = 5;
 
-        Bitmap whole = null;
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        final int width = size.x;
+
+        bPieces = new ArrayList<Bitmap>();
+        egridview = (ExtGridView)findViewById(R.id.gridview);
 
         Bundle b = getIntent().getExtras();
 
@@ -56,43 +67,40 @@ public class PuzzleActivity extends Activity {
             desiredCols = b.getInt("Columns");
             desiredRows = b.getInt("Rows");
             String path = b.getString("Path");
-            whole = BitmapFactory.decodeFile(path);
-            Log.i("TESTOWY", "bundle nie NULL" + path);
+            egridview.setNumColumns(desiredCols);
+            egridview.setColumnWidth(width / desiredCols);
+            if (b.getString("TYPE").equals("FILE")) {
+                whole = loadfromFile(path);
+                createPiecesArray(whole, (float)width / whole.getWidth(), desiredCols, desiredRows);
+                setListener();
+                egridview.setAdapter(new ImageAdapter(this, mListener, bPieces));
+                egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols, desiredCols);
+
+            } else if (b.getString("TYPE").equals("URL")) {
+                ImageDownloadTask mDownloadTask = new ImageDownloadTask(new ImageLoaderListener() {
+
+                    @Override
+                    public void onImageDownloaded(Bitmap bmp) {
+                        whole = bmp;
+                        createPiecesArray(whole, (float)width / whole.getWidth(), desiredCols,
+                                desiredRows);
+                        setListener();
+                        egridview.setAdapter(new ImageAdapter(getApplicationContext(), mListener,
+                                bPieces));
+                        egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols,
+                                desiredCols);
+
+                    }
+                });
+                mDownloadTask
+                        .execute("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg");
+            }
+
+        } else if (savedInstanceState != null) {
+            finish();
         } else {
             finish();
         }
-
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-
-        bPieces = new ArrayList<Bitmap>();
-
-        egridview = (ExtGridView)findViewById(R.id.gridview);
-        egridview.setNumColumns(desiredCols);
-        egridview.setColumnWidth(width / desiredCols);
-
-        createPiecesArray(whole, (float)width / whole.getWidth(), desiredCols, desiredRows);
-
-        mListener = new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    int i = egridview.getPositionForView(v);
-                    egridview.switchPos(i);
-                    if (egridview.isOrdered())
-                        gameFinished();
-                    return true;
-                }
-                return false;
-
-            }
-        };
-
-        egridview.setAdapter(new ImageAdapter(this, mListener, bPieces));
-        egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols, desiredCols);
 
     }
 
@@ -146,4 +154,28 @@ public class PuzzleActivity extends Activity {
         Toast.makeText(getApplicationContext(), "Congratulations!!!", Toast.LENGTH_SHORT).show();
 
     }
+
+    private Bitmap loadfromFile(String filename) {
+        return BitmapFactory.decodeFile(filename);
+
+    }
+
+    private void setListener() {
+        mListener = new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    int i = egridview.getPositionForView(v);
+                    egridview.switchPos(i);
+                    if (egridview.isOrdered())
+                        gameFinished();
+                    return true;
+                }
+                return false;
+
+            }
+        };
+    }
+
 }

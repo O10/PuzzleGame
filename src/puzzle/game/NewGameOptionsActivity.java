@@ -14,7 +14,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +40,8 @@ public class NewGameOptionsActivity extends Activity {
 
     EditText colsNumber;
 
+    EditText urlPath;
+
     String picturePath;
 
     TableLayout tableLayout;
@@ -61,6 +62,7 @@ public class NewGameOptionsActivity extends Activity {
         Button chooseImageB = (Button)findViewById(R.id.chooseimageb);
         Button startB = (Button)findViewById(R.id.startbutton);
         tableLayout = (TableLayout)findViewById(R.id.tablelayout);
+        urlPath = (EditText)findViewById(R.id.urladd);
 
         rowsNumber = (EditText)findViewById(R.id.rowsvalue);
         colsNumber = (EditText)findViewById(R.id.columnsvalue);
@@ -81,7 +83,8 @@ public class NewGameOptionsActivity extends Activity {
             @Override
             public void onClick(View v) {
 
-                if (picturePath == null || rowsNumber.getText().toString().matches("")
+                if ((picturePath == null && urlPath.getText().length() == 0)
+                        || rowsNumber.getText().toString().matches("")
                         || colsNumber.getText().toString().matches("")) {
                     Toast.makeText(getApplicationContext(), "Fill all the fields first",
                             Toast.LENGTH_SHORT).show();
@@ -93,11 +96,16 @@ public class NewGameOptionsActivity extends Activity {
 
                 b.putInt("Rows", Integer.parseInt((rowsNumber.getText().toString())));
                 b.putInt("Columns", Integer.parseInt((colsNumber.getText().toString())));
-                b.putString("Path", picturePath);
+                if (urlPath.getText().length() != 0) {
+                    b.putString("Path", urlPath.getText().toString());
+                    b.putString("TYPE", "URL");
+                } else {
+                    b.putString("TYPE", "FILE");
+                    b.putString("Path", picturePath);
+                }
 
                 intent.putExtras(b);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                Log.i("TESTOWY", "Starting puzzle activity");
                 startActivity(intent);
                 finish();
 

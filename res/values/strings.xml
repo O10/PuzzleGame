@@ -2,6 +2,8 @@
 
     <string name="app_name">PuzzleGame</string>
     <string name="newtitle">New Game</string>
+    <string name="savefile">Save to file</string>
+    <string name="loadfile">Load from file</string>
      <item name="newgame" type="id"/>
     
     
