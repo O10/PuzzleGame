@@ -24,14 +24,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- *@author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
- *@author Ready4S
- *@since 27 cze 2014 16:32:43
- */
-/**
- * @author Denis Migol
+ * @author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
+ * @author Ready4S
+ * @since 27 cze 2014 16:32:43
  */
 
 public class PuzzleActivity extends Activity {
@@ -57,6 +55,7 @@ public class PuzzleActivity extends Activity {
         Point size = new Point();
         display.getSize(size);
         final int width = size.x;
+        final Bundle instancestae = savedInstanceState;
 
         bPieces = new ArrayList<Bitmap>();
         egridview = (ExtGridView)findViewById(R.id.gridview);
@@ -75,6 +74,10 @@ public class PuzzleActivity extends Activity {
                 setListener();
                 egridview.setAdapter(new ImageAdapter(this, mListener, bPieces));
                 egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols, desiredCols);
+                if (savedInstanceState != null)
+                    ((ImageAdapter)egridview.getAdapter()).positonPieces(savedInstanceState
+                            .getIntegerArrayList("positions"));
+                whole = null;
 
             } else if (b.getString("TYPE").equals("URL")) {
                 ImageDownloadTask mDownloadTask = new ImageDownloadTask(new ImageLoaderListener() {
@@ -89,6 +92,11 @@ public class PuzzleActivity extends Activity {
                                 bPieces));
                         egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols,
                                 desiredCols);
+                        if (instancestae != null) {
+                            ((ImageAdapter)egridview.getAdapter()).positonPieces(instancestae
+                                    .getIntegerArrayList("positions"));
+                        }
+                        whole = null;
 
                     }
                 });
@@ -96,8 +104,6 @@ public class PuzzleActivity extends Activity {
                         .execute("http://www.joomlaworks.net/images/demos/galleries/abstract/7.jpg");
             }
 
-        } else if (savedInstanceState != null) {
-            finish();
         } else {
             finish();
         }
@@ -125,6 +131,13 @@ public class PuzzleActivity extends Activity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        List<Integer> list = ((ImageAdapter)egridview.getAdapter()).getPosList();
+        savedInstanceState.putIntegerArrayList("positions", (ArrayList<Integer>)list);
     }
 
     void createPiecesArray(Bitmap whole, float k, int cols, int rows) {

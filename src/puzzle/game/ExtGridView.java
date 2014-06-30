@@ -13,12 +13,9 @@ import android.widget.GridView;
 import java.util.Random;
 
 /**
- *@author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
- *@author Ready4S
- *@since 27 cze 2014 16:35:33
- */
-/**
- * @author Denis Migol
+ * @author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
+ * @author Ready4S
+ * @since 27 cze 2014 16:35:33
  */
 
 public class ExtGridView extends GridView {
@@ -39,17 +36,14 @@ public class ExtGridView extends GridView {
 
     public ExtGridView(Context context) {
         super(context);
-        // TODO Auto-generated constructor stub
     }
 
     public ExtGridView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
     }
 
     public ExtGridView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        // TODO Auto-generated constructor stub
     }
 
     public void shufflePuzzles(int steps, int desiredcols) {

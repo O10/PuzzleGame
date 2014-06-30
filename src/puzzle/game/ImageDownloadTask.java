@@ -16,12 +16,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- *@author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
- *@author Ready4S
- *@since 30 cze 2014 13:14:22
- */
-/**
- * @author Denis Migol
+ * @author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
+ * @author Ready4S
+ * @since 30 cze 2014 13:14:22
  */
 public class ImageDownloadTask extends AsyncTask<String, Void, Void> {
 

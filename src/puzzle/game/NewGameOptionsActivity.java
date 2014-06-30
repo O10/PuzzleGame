@@ -9,19 +9,13 @@ package puzzle.game;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -50,7 +44,6 @@ public class NewGameOptionsActivity extends Activity {
      * 
      */
     public NewGameOptionsActivity() {
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -129,33 +122,6 @@ public class NewGameOptionsActivity extends Activity {
             picturePath = cursor.getString(columnIndex);
 
             cursor.close();
-
-            Bitmap tempBitmap = BitmapFactory.decodeFile(picturePath);
-            // previewImage.setImageBitmap(tempBitmap);
-
-            TableRow tableRow = new TableRow(this);
-            tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-                    TableRow.LayoutParams.WRAP_CONTENT));
-
-            TextView textView = new TextView(getApplicationContext());
-            // textView.setLayoutParams(new
-            // TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,
-            // TableRow.LayoutParams.WRAP_CONTENT));
-
-            textView.setText("Preview");
-
-            textView.setTextAppearance(getApplicationContext(),
-                    android.R.style.TextAppearance_Large);
-            textView.setGravity(Gravity.CENTER);
-
-            tableRow.addView(textView);
-
-            ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setImageBitmap(Bitmap.createScaledBitmap(tempBitmap, 100, 500, false));
-
-            tableRow.addView(imageView);
-
-            tableLayout.addView(tableRow);
 
         }
     }

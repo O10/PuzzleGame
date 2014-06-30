@@ -18,12 +18,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *@author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
- *@author Ready4S
- *@since 27 cze 2014 16:34:29
- */
-/**
- * @author Denis Migol
+ * @author Aleksander Wojcik Ready4S aleksander.k.wojcik@gmail.com
+ * @author Ready4S
+ * @since 27 cze 2014 16:34:29
  */
 
 public class ImageAdapter extends BaseAdapter {
@@ -104,5 +101,22 @@ public class ImageAdapter extends BaseAdapter {
             }
         }
         return true;
+    }
+
+    List<Integer> getPosList() {
+        return positions;
+    }
+
+    public void positonPieces(List<Integer> newpositions) {
+        for (int i = 0; i < bList.size(); i++) {
+            if (newpositions.get(i) == 0)
+                setBlank(i);
+            if (newpositions.get(i) != positions.get(i)) {
+                int curpos = positions.indexOf(newpositions.get(i));
+                switchPos(curpos, i);
+
+            }
+        }
+
     }
 }
