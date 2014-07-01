@@ -82,26 +82,28 @@ public class PuzzleActivity extends Activity {
                 whole = null;
 
             } else if (b.getString("TYPE").equals("URL")) {
-                ImageDownloadTask mDownloadTask = new ImageDownloadTask(new ImageLoaderListener() {
+                ImageDownloadTask mDownloadTask = new ImageDownloadTask(PuzzleActivity.this,
+                        new ImageLoaderListener() {
 
-                    @Override
-                    public void onImageDownloaded(Bitmap bmp) {
-                        whole = bmp;
-                        createPiecesArray(whole, (float)width / whole.getWidth(), desiredCols,
-                                desiredRows);
-                        setListener();
-                        egridview.setAdapter(new ImageAdapter(getApplicationContext(), mListener,
-                                bPieces));
-                        if (instancestae != null) {
-                            ((ImageAdapter)egridview.getAdapter()).positonPieces(instancestae
-                                    .getIntegerArrayList("positions"));
-                        } else
-                            egridview.shufflePuzzles(desiredCols * desiredCols * desiredCols,
-                                    desiredCols);
-                        whole = null;
+                            @Override
+                            public void onImageDownloaded(Bitmap bmp) {
+                                whole = bmp;
+                                createPiecesArray(whole, (float)width / whole.getWidth(),
+                                        desiredCols, desiredRows);
+                                setListener();
+                                egridview.setAdapter(new ImageAdapter(getApplicationContext(),
+                                        mListener, bPieces));
+                                if (instancestae != null) {
+                                    ((ImageAdapter)egridview.getAdapter())
+                                            .positonPieces(instancestae
+                                                    .getIntegerArrayList("positions"));
+                                } else
+                                    egridview.shufflePuzzles(desiredCols * desiredCols
+                                            * desiredCols, desiredCols);
+                                whole = null;
 
-                    }
-                });
+                            }
+                        });
                 mDownloadTask.execute(path);
             }
 

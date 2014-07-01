@@ -6,11 +6,14 @@
 
 package puzzle.game;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.SystemClock;
+import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,14 +32,17 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Void> {
 
     ImageLoaderListener listener;
 
+    Activity activity;
+
     public interface ImageLoaderListener {
 
         void onImageDownloaded(Bitmap bmp);
 
     }
 
-    public ImageDownloadTask(ImageLoaderListener mlistener) {
+    public ImageDownloadTask(Activity callingact, ImageLoaderListener mlistener) {
         listener = mlistener;
+        activity = callingact;
     }
 
     @Override
@@ -49,7 +55,7 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Void> {
             InputStream input = connection.getInputStream();
             image = BitmapFactory.decodeStream(input);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -57,9 +63,17 @@ public class ImageDownloadTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        if (listener != null) {
+        if (image == null && activity != null) {
+            super.onPostExecute(result);
+            Toast.makeText(activity, "Problem with the URL", Toast.LENGTH_LONG).show();
+            SystemClock.sleep(1000);
+            Intent it = new Intent(activity.getApplicationContext(), NewGameOptionsActivity.class);
+            activity.startActivity(it);
+            activity.finish();
+
+        } else if (listener != null) {
             listener.onImageDownloaded(image);
+            super.onPostExecute(result);
         }
-        super.onPostExecute(result);
     }
 }
